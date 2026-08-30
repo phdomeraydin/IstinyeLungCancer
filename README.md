@@ -234,8 +234,7 @@ python stage4.py
 
 The repository contains analysis code and generated figures. The clinical dataset is not stored directly in this GitHub repository.
 
-De-identified study data are described in the associated manuscript and are subject to the data-access conditions of the original data provider and institutional approvals.
-
+The data produced and examined in the present study are available through the Istinye University Dataset Sharing Platform. De-identified clinical datasets may be accessed via the following link: https://dataset.istinye.edu.tr/dataset?did=16, (accessed on 01 April 2026). All records were anonymized in full compliance with applicable ethical standards. Data access is granted exclusively for research use within a controlled-access framework, in accordance with the platform’s established data-sharing and licensing policies.
 ---
 
 ## Reproducibility
@@ -260,7 +259,6 @@ If you use this repository, please cite the associated article once the final pu
 > Aydin O., Korkmaz L., Selim A., Kuzlu M., Catak F. O., Kusetogullari H., Cali U.  
 > **Forecasting Lung Cancer Burden Using Multicenter Real-World Data.**
 
-Publication information and DOI can be added here after publication.
 
 ---
 
