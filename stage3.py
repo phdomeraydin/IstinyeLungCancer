@@ -25,7 +25,7 @@ except ImportError:
 
 
 # Load dataset
-df = pd.read_excel("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/dataset.xlsx")
+df = pd.read_excel("dataset.xlsx")
 df = df.sort_values("Year").reset_index(drop=True)
 
 # Keep all years with valid prevalence values for forecasting
@@ -83,7 +83,7 @@ plt.ylabel("Annual % Change", fontsize=12)
 plt.grid(True, alpha=0.3)
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.savefig("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/analysis_annual_change.png", 
+plt.savefig("analysis_annual_change.png", 
             dpi=300, bbox_inches='tight')
 plt.close()
 
@@ -184,7 +184,7 @@ print("\nSensitivity Analysis Results:")
 print(sensitivity_results)
 
 sensitivity_results.to_excel(
-    "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/sensitivity_analysis.xlsx",
+    "sensitivity_analysis.xlsx",
     index=False
 )
 
@@ -341,7 +341,7 @@ if ARIMA_AVAILABLE:
         print(arima_order_df.head(10).to_string(index=False))
 
         arima_order_df.to_excel(
-            "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/arima_order_selection.xlsx",
+            "arima_order_selection.xlsx",
             index=False
         )
 # -----------------------------------
@@ -506,7 +506,7 @@ print("\nModel Performance (sorted by RMSE):")
 print(performance_df.to_string(index=False))
 
 performance_df.to_excel(
-    "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/model_comparison.xlsx",
+    "model_comparison.xlsx",
     index=False
 )
 
@@ -556,7 +556,7 @@ for idx, (model_name, forecast_data) in enumerate(all_forecasts.items()):
     ax.tick_params(axis='x', rotation=45)
 
 plt.tight_layout()
-plt.savefig("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/forecast_all_models.png", 
+plt.savefig("forecast_all_models.png", 
             dpi=300, bbox_inches='tight')
 plt.close()
 print("✓ Forecast visualization saved")
@@ -574,7 +574,7 @@ for model_name, forecast_data in all_forecasts.items():
     forecast_table[f"{model_name}_upper_pi"] = forecast_data["upper_pi"]
 
 forecast_table.to_excel(
-    "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/forecast_2026_2030.xlsx",
+    "forecast_2026_2030.xlsx",
     index=False
 )
 
