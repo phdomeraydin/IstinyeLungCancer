@@ -13,7 +13,7 @@ from sklearn.metrics import (
 # =========================================
 
 df = pd.read_excel(
-    "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/dataset.xlsx"
+    "dataset.xlsx"
 )
 
 df = df.sort_values("Year").reset_index(drop=True)
@@ -300,12 +300,12 @@ print(comparison.to_string(index=False))
 # =========================================
 
 grid_df.to_excel(
-    "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/xgboost_parameter_search.xlsx",
+    "xgboost_parameter_search.xlsx",
     index=False
 )
 
 comparison.to_excel(
-    "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/xgboost_test_predictions.xlsx",
+    "xgboost_test_predictions.xlsx",
     index=False
 )
 
@@ -492,7 +492,7 @@ print(
 # =========================================
 
 xgb_report_df.to_excel(
-    "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/"
+    "d:/"
     "xgboost_forecast_2026_2030.xlsx",
     index=False
 )
