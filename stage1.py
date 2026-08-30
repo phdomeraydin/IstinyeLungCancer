@@ -4,8 +4,8 @@ import numpy as np
 # ================================
 # 1. READ DATA
 # ================================
-input_file = "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/cancer.csv"
-output_file = "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/dataset.xlsx"
+input_file = "cancer.csv"
+output_file = "dataset.xlsx"
 
 # Read CSV correctly
 df = pd.read_csv(input_file)
