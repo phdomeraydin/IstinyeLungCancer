@@ -4,11 +4,26 @@ import numpy as np
 # ================================
 # 1. READ DATA
 # ================================
-input_file = "cancer.xlsx"
-output_file = "dataset.xlsx"
+input_file = "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/cancer.csv"
+output_file = "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/dataset.xlsx"
 
-df = pd.read_excel(input_file)
+# Read CSV correctly
+df = pd.read_csv(input_file)
 df.columns = df.columns.str.strip()
+
+# ================================
+# >>> NEW: DATA QUALITY CHECKS <<<
+# ================================
+print("="*50)
+print("DATA QUALITY REPORT")
+print("="*50)
+print(f"Total patients: {len(df)}")
+print(f"\nColumn names found: {len(df.columns)} columns")
+print(f"\nFirst 5 column names:\n{list(df.columns[:5])}")
+print(f"\nDiagnosis year range: {df['Year of Diagnosis'].min()} - {df['Year of Diagnosis'].max()}")
+print(f"\nMissing values per column:")
+print(df.isnull().sum()[df.isnull().sum() > 0])
+print("="*50)
 
 # ================================
 # 2. STANDARDIZE BINARY VARIABLES
@@ -17,8 +32,11 @@ df.columns = df.columns.str.strip()
 # Automatically capture Hospital Application columns
 hospital_cols = [col for col in df.columns if "Hospital Application" in col]
 
+# >>> NEW: Print detected hospital columns <<<
+print(f"\nDetected {len(hospital_cols)} hospital application columns:")
+print(hospital_cols)
+
 binary_cols = hospital_cols + [
-    "Exitus Status",
     "Is There Heart Failure?",
     "Is There Heart Failure After Diagnosis?",
     "Is There Ischemic Heart Disease After Diagnosis?",
@@ -72,13 +90,19 @@ diagnosis_density = (
 # 5. HOSPITAL-BASED PREVALENCE + TOTAL APPLICATION
 # ================================
 
-years = list(range(2000, 2025))
+# >>> CHANGED: Auto-detect years from hospital columns instead of hardcoding <<<
+years = sorted([int(col.split()[0]) for col in hospital_cols])
+
+print(f"\nYears to process: {years}")
+print(f"Year range: {min(years)} to {max(years)}")
+
 records = []
 
 for year in years:
     app_col = f"{year} Hospital Application"
     
     if app_col not in df.columns:
+        print(f"WARNING: Missing column {app_col}")
         continue
     
     active = df[df[app_col] == 1]
@@ -145,9 +169,7 @@ for year in years:
         "HT_Rate": cohort["Is There Blood Pressure?"].mean() if "Is There Blood Pressure?" in df.columns else np.nan,
         "DM_Rate": cohort["Is There Diabetes?"].mean() if "Is There Diabetes?" in df.columns else np.nan,
         "CHF_Rate": cohort["Is There Heart Failure?"].mean() if "Is There Heart Failure?" in df.columns else np.nan,
-        "CKF_Rate": cohort["Is There Chronic Kidney Failure?"].mean() if "Is There Chronic Kidney Failure?" in df.columns else np.nan,
-        "MeanSurvivalMonth": cohort["Survival Month"].mean() if "Survival Month" in df.columns else np.nan,
-        "AnnualDeaths": cohort["Exitus Status"].sum() if "Exitus Status" in df.columns else np.nan
+        "CKF_Rate": cohort["Is There Chronic Kidney Failure?"].mean() if "Is There Chronic Kidney Failure?" in df.columns else np.nan
     })
 
 yearly_agg = pd.DataFrame(agg_records)
@@ -177,8 +199,33 @@ for col in lag_features:
     ts_data[f"{col}_lag1"] = ts_data[col].shift(1)
     ts_data[f"{col}_lag2"] = ts_data[col].shift(2)
 
-# Exclude the first two years due to lag.
-ts_data_final = ts_data[ts_data["Year"] >= 2002].reset_index(drop=True)
+# >>> CHANGED: Auto-calculate first valid year (min_year + 2) instead of hardcoding 2002 <<<
+#min_year = ts_data["Year"].min()
+#first_valid_year = min_year + 2
+
+#print(f"\nExcluding first 2 years ({min_year}-{min_year+1}) due to lag features")
+#print(f"Final dataset years: {first_valid_year} to {ts_data['Year'].max()}")
+
+#ts_data_final = ts_data[ts_data["Year"] >= first_valid_year].reset_index(drop=True)
+ts_data_final = ts_data.copy().reset_index(drop=True)
+
+print("\nKeeping all available calendar years in the final dataset.")
+print(f"Final dataset years: {ts_data_final['Year'].min()} to {ts_data_final['Year'].max()}")
+print("Lag variables are retained with missing values in the first one or two years,")
+print("but these lag variables are not used as predictors in the final forecasting models.")
+
+# >>> NEW: Final dataset summary <<<
+print("\n" + "="*50)
+print("FINAL DATASET SUMMARY")
+print("="*50)
+print(f"Total years in final dataset: {len(ts_data_final)}")
+print(f"Year range: {ts_data_final['Year'].min()} - {ts_data_final['Year'].max()}")
+print(f"\nColumns in final dataset: {len(ts_data_final.columns)}")
+print(f"\nFirst 5 rows:")
+print(ts_data_final.head())
+print("\nDescriptive statistics:")
+print(ts_data_final.describe())
+print("="*50)
 
 # ================================
 # 11. SAVE AS EXCEL FILE
@@ -186,4 +233,5 @@ ts_data_final = ts_data[ts_data["Year"] >= 2002].reset_index(drop=True)
 
 ts_data_final.to_excel(output_file, index=False)
 
-print("Successfully created dataset.xlsx!")
+print(f"\n✓ Successfully created dataset.xlsx!")
+print(f"✓ File saved to: {output_file}")
