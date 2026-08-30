@@ -12,7 +12,7 @@ import seaborn as sns
 from statsmodels.tsa.stattools import adfuller
 from scipy.stats import pearsonr
 
-file_path = "d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/dataset.xlsx"
+file_path = "dataset.xlsx"
 df = pd.read_excel(file_path)
 
 print("First 5 rows of dataset:")
@@ -27,7 +27,7 @@ print("\nDescriptive Statistics:")
 print(summary_table)
 
 # >>> NEW: Save summary table to Excel <<<
-summary_table.to_excel("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/summary_statistics.xlsx")
+summary_table.to_excel("summary_statistics.xlsx")
 print("\n✓ Summary statistics saved to summary_statistics.xlsx")
 
 # ================================
@@ -60,7 +60,7 @@ print("\nCorrelation Matrix:")
 print(correlation_matrix)
 
 # Save correlation matrix
-correlation_matrix.to_excel("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/correlation_matrix.xlsx")
+correlation_matrix.to_excel("correlation_matrix.xlsx")
 
 # Correlation heatmap
 plt.figure(figsize=(12, 10))
@@ -68,7 +68,7 @@ sns.heatmap(correlation_matrix, annot=True, fmt='.2f', cmap='coolwarm',
             center=0, square=True, linewidths=1)
 plt.title("Correlation Matrix of Key Variables", fontsize=14, fontweight='bold')
 plt.tight_layout()
-plt.savefig("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/correlation_heatmap.png", 
+plt.savefig("correlation_heatmap.png", 
             dpi=300, bbox_inches='tight')
 plt.close()
 print("✓ Correlation heatmap saved")
@@ -155,7 +155,7 @@ plt.grid(True, alpha=0.3)
 plt.xticks(rotation=45)
 plt.tight_layout()
 # >>> NEW: Save figure <<<
-plt.savefig("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/fig1_prevalence_trend.png", 
+plt.savefig("fig1_prevalence_trend.png", 
             dpi=300, bbox_inches='tight')
 plt.close()
 print("\n✓ Figure 1 saved: Prevalence trend")
@@ -169,7 +169,7 @@ plt.ylabel("Diagnosis Count", fontsize=12)
 plt.grid(True, alpha=0.3)
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.savefig("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/fig2_diagnosis_count.png", 
+plt.savefig("fig2_diagnosis_count.png", 
             dpi=300, bbox_inches='tight')
 plt.close()
 print("✓ Figure 2 saved: Diagnosis count")
@@ -183,7 +183,7 @@ plt.ylabel("Total Applications", fontsize=12)
 plt.grid(True, alpha=0.3)
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.savefig("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/fig3_total_applications.png", 
+plt.savefig("fig3_total_applications.png", 
             dpi=300, bbox_inches='tight')
 plt.close()
 print("✓ Figure 3 saved: Total applications")
@@ -197,7 +197,7 @@ plt.ylabel("Normalized Diagnosis Rate", fontsize=12)
 plt.grid(True, alpha=0.3)
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.savefig("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/fig4_normalized_rate.png", 
+plt.savefig("fig4_normalized_rate.png", 
             dpi=300, bbox_inches='tight')
 plt.close()
 print("✓ Figure 4 saved: Normalized diagnosis rate")
@@ -237,7 +237,7 @@ axes[1, 1].set_ylabel("Rate")
 axes[1, 1].grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/fig5_combined_trends.png", 
+plt.savefig("fig5_combined_trends.png", 
             dpi=300, bbox_inches='tight')
 plt.close()
 print("✓ Figure 5 saved: Combined trends")
@@ -261,7 +261,7 @@ if existing_comorbidities:
     plt.grid(True, alpha=0.3)
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig("d:/Academics/01-YAYIN/Z-2026-ISTINYE-LUNG-CANCER/fig6_comorbidity_trends.png", 
+    plt.savefig("fig6_comorbidity_trends.png", 
                 dpi=300, bbox_inches='tight')
     plt.close()
     print("✓ Figure 6 saved: Comorbidity trends")
